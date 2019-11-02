@@ -1,0 +1,8 @@
+olingoApp01/target/**
+*.factorypath
+olingoApp01/.settings**
+**.settings**
+**target/**
+**/target/**
+*.project
+*.classpath
