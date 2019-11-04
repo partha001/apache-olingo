@@ -223,4 +223,19 @@ public class MyUtil {
 	}
 
 
+
+	
+	 public void deleteCustomer(EdmEntityType edmEntityType, List<UriParameter> keyParams)
+		      throws ODataApplicationException {
+
+		    Entity customerEntity = readCustomerData(edmEntityType, keyParams);
+		    if (customerEntity == null) {
+		      throw new ODataApplicationException("Entity not found", HttpStatusCode.NOT_FOUND.getStatusCode(), Locale.ENGLISH);
+		    }
+
+		    String sql = "delete from customer where id=?";
+		    this.jdbcTemplate.update(sql , new Object[] {customerEntity.getProperty("ID").getValue()});
+		  }
+
+
 }

@@ -204,8 +204,29 @@ public class MyEntityProcessor implements EntityProcessor{
 	@Override
 	public void deleteEntity(ODataRequest request, ODataResponse response, UriInfo uriInfo)
 			throws ODataApplicationException, ODataLibraryException {
-		// TODO Auto-generated method stub
 
+		// 1. Retrieve the entity set which belongs to the requested entity 
+		List<UriResource> resourcePaths = uriInfo.getUriResourceParts();
+		// Note: only in our example we can assume that the first segment is the EntitySet
+		UriResourceEntitySet uriResourceEntitySet = (UriResourceEntitySet) resourcePaths.get(0); 
+		EdmEntitySet edmEntitySet = uriResourceEntitySet.getEntitySet();
+
+		// 2. delete the data in backend
+		List<UriParameter> keyPredicates = uriResourceEntitySet.getKeyPredicates();
+		deleteEntityData(edmEntitySet, keyPredicates);
+		
+		//3. configure the response object
+		response.setStatusCode(HttpStatusCode.NO_CONTENT.getStatusCode());
+	}
+
+	private void deleteEntityData(EdmEntitySet edmEntitySet, List<UriParameter> keyPredicates) throws ODataApplicationException {
+		EdmEntityType edmEntityType = edmEntitySet.getEntityType();
+
+	    // actually, this is only required if we have more than one Entity Type
+	    if (edmEntityType.getName().equals(MyEdmProvider.ET_CUSTOMER_NAME)) {
+	      this.util.deleteCustomer(edmEntityType, keyPredicates);
+	    }
+		
 	}
 
 }
