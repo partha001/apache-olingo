@@ -12,6 +12,7 @@ import org.apache.olingo.commons.api.edm.provider.CsdlEntityContainerInfo;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntitySet;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
+import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
 import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
 import org.apache.olingo.commons.api.ex.ODataException;
 import org.springframework.stereotype.Component;
@@ -46,15 +47,21 @@ public class MyEdmProvider extends CsdlAbstractEdmProvider {
 		          .setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
 		      CsdlProperty name = new CsdlProperty().setName("NAME")
 		          .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-		      CsdlProperty description = new CsdlProperty().setName("EMAIL")
+		      CsdlProperty email = new CsdlProperty().setName("EMAIL")
 		          .setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+		      
+		      // create PropertyRef for Key element
+		      CsdlPropertyRef propertyRef = new CsdlPropertyRef();
+		      propertyRef.setName("ID");
+
 
 		      // configure EntityType
 		      entityType = new CsdlEntityType();
 		      entityType.setName(ET_CUSTOMER_NAME);
-		      entityType.setProperties(Arrays.asList(id, name, description));
+		      entityType.setProperties(Arrays.asList(id, name, email));
 //		      entityType.setKey(Arrays.asList(propertyRef));
 //		      entityType.setNavigationProperties(navPropList);
+		      entityType.setKey(Arrays.asList(propertyRef));
 		}
 		
 		return entityType;

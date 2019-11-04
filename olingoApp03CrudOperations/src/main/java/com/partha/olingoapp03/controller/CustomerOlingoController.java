@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.partha.olingoapp03.processors.MyEntityCollectionProcessor;
+import com.partha.olingoapp03.processors.MyEntityProcessor;
 import com.partha.olingoapp03.providers.MyEdmProvider;
 
 public class CustomerOlingoController extends HttpServlet{
@@ -26,12 +27,16 @@ private static final long serialVersionUID = 1L;
 	
 	private MyEdmProvider edmProvider;
 	private MyEntityCollectionProcessor entitySetProcessor;
+	private MyEntityProcessor entityProcessor;
 	
 	public CustomerOlingoController() {}
 	
-	public CustomerOlingoController(MyEdmProvider edmProvider, MyEntityCollectionProcessor entitySetProcessor) {
+	public CustomerOlingoController(MyEdmProvider edmProvider, 
+			MyEntityCollectionProcessor entitySetProcessor,
+			MyEntityProcessor entityProcessor) {
 		this.edmProvider = edmProvider;
 		this.entitySetProcessor = entitySetProcessor;
+		this.entityProcessor = entityProcessor;
 	}
 
 	public void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
@@ -42,6 +47,7 @@ private static final long serialVersionUID = 1L;
 			ServiceMetadata edm = odata.createServiceMetadata(edmProvider, new ArrayList<EdmxReference>());
 			ODataHttpHandler handler = odata.createHandler(edm);
 			handler.register(entitySetProcessor);
+			handler.register(entityProcessor);
 			handler.process(servletRequest, servletResponse);
 			logger.info("Proccess completed");
 		} catch (RuntimeException e) {
