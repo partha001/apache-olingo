@@ -1,3 +1,6 @@
+delete from accounts;
+delete from customer;
+
 insert into customer values(10002,'Sachin Tendulkar','sachin@gmail.com');
 insert into customer values(10003,'Sourav Ganguly','sourav@gmail.com');
 

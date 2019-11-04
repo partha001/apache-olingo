@@ -1,8 +1,11 @@
+drop table accounts;
+drop table customer;
+
 create table customer
 (
    id integer auto_increment not null,
    name varchar(255) not null,
-   email varchar(255) not null,
+   email varchar(255) ,
    primary key(id)
 );
 
