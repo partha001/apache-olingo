@@ -1,7 +1,6 @@
-drop table accounts;
-drop table customer;
 
-create table customer
+
+create table if not exists customer
 (
    id integer auto_increment not null,
    name varchar(255) not null,
@@ -11,7 +10,7 @@ create table customer
 
 
 
-create table accounts(
+create table if not exists accounts(
 	id integer auto_increment not null,
 	customerid  integer,
     type varchar(255) not null,
