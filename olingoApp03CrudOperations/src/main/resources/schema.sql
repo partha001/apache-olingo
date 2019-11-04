@@ -15,6 +15,6 @@ create table if not exists accounts(
 	customerid  integer,
     type varchar(255) not null,
     balance integer,
-    foreign key (customerid) references customer(id),
+    /* foreign key (customerid) references customer(id), */
     primary key(id)
 );
